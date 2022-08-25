@@ -43,3 +43,9 @@ jobs:
             with:
               name: code-coverage-report
               path: src/coverage.txt
+              
+          - name: Upload coverage report to artifact
+            uses: actions/upload-artifact@v3
+            with:
+                name: code-coverage-report
+                path: src/coverage.txt
