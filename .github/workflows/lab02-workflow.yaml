@@ -49,3 +49,23 @@ jobs:
             with:
                 name: code-coverage-report
                 path: src/coverage.txt
+                
+    code-vuln-scan:
+        name: Code Vulnerability Scan
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3 #Use checkout action to download the source code to run unittest
+              name: Checkout
+            - uses: aquasecurity/trivy-action@master
+              name: Vulnerability Scan
+              with:
+                scan-type: 'fs'
+                ignore-unfixed: true
+                format: 'sarif'
+                output: 'trivy-results.sarif'
+                severity: 'CRITICAL'
+            - uses: actions/upload-artifact@v3
+              name: Save Code vulnerability scan report
+              with:
+                name: code-vuln-report
+                path: trivy-results.sarif
